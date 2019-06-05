@@ -15,20 +15,45 @@ RSpec.describe PaperclipVips do
 
     it "returns nil as default" do
       service = Paperclip::Vips.new(@file, { geometry: "400x400" })
-      result = service.crop
+      result = service.send(:crop)
       expect(result).to eq(nil)
     end
 
     it "returns centre if should_crop is true" do
       service = Paperclip::Vips.new(@file, { geometry: "400x400#" })
-      result = service.crop
+      result = service.send(:crop)
       expect(result).to eq(:centre)
     end
 
     it "returns crop value if supplied in options" do
       service = Paperclip::Vips.new(@file, { geometry: "400x400#", crop: :low })
-      result = service.crop
+      result = service.send(:crop)
       expect(result).to eq(:low)
+    end
+  end
+
+  describe "current_format" do
+    it "returns format if path includes extension" do
+      file = Tempfile.new(['test', '.jpg'])
+      File.write(file.path, File.read(File.join(PaperclipVips.root, 'spec', 'support', 'image.jpg')))
+
+      service = Paperclip::Vips.new(file, { geometry: "400x400" })
+      result = service.send(:current_format, file)
+      expect(result).to eq(".jpg")
+
+      file.close
+    end
+
+    it "returns format if path excludes extension" do
+      string_io = StringIO.open(File.read(File.join(PaperclipVips.root, 'spec', 'support', 'image.jpg')))
+      file = Paperclip.io_adapters.for(string_io)
+      file.original_filename = "text.gif"
+
+      service = Paperclip::Vips.new(file, { geometry: "1200x800" })
+      result = service.send(:current_format, file)
+      expect(result).to eq(".gif")
+
+      file.close
     end
   end
 
