@@ -7,7 +7,7 @@ A custom paperclip processor that uses the [libvips image processing library](ht
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'paperclip-vips'
+gem 'paperclip-vips', :git=>'https://github.com/tsu-social/paperclip-vips.git'
 ```
 
 And then execute:

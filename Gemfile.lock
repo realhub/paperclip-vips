@@ -2,7 +2,7 @@ PATH
   remote: .
   specs:
     paperclip-vips (1.1.0)
-      paperclip (>= 5.0.0)
+      kt-paperclip (>= 5.0.0)
       ruby-vips (~> 2.0.13)
 
 GEM
@@ -67,3 +67,4 @@ DEPENDENCIES
 
 BUNDLED WITH
    2.0.1
+   
