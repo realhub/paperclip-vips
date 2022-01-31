@@ -1,3 +1,7 @@
+## [1.2.1] - 2022-01-31
+
+- Update dev dependencies
+
 ## [1.2.0] - 2022-01-31
 
 - Update ruby-vips and dependencies
