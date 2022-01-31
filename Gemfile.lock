@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    paperclip-vips (1.2.0)
+    paperclip-vips (1.2.1)
       paperclip (>= 5.0.0)
       ruby-vips (~> 2.1)
 
