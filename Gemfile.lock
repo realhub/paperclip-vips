@@ -29,8 +29,10 @@ GEM
     mimemagic (0.3.10)
       nokogiri (~> 1)
       rake
+    mini_portile2 (2.8.0)
     minitest (5.15.0)
-    nokogiri (1.12.5)
+    nokogiri (1.13.4)
+      mini_portile2 (~> 2.8.0)
       racc (~> 1.4)
     paperclip (6.1.0)
       activemodel (>= 4.2.0)
