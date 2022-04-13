@@ -1,7 +1,7 @@
 module Paperclip
   class Vips < Processor
-    attr_accessor :current_geometry, :target_geometry, :format, :whiny, :convert_options,
-                  :source_file_options, :auto_orient
+    attr_accessor :auto_orient, :convert_options, :current_geometry, :format, :source_file_options,
+                  :target_geometry, :whiny
 
     def initialize(file, options = {}, attachment = nil)
       super
@@ -11,7 +11,10 @@ module Paperclip
       @target_geometry = options.fetch(:string_geometry_parser, Geometry).parse(geometry)
       @current_geometry = options.fetch(:file_geometry_parser, Geometry).from_file(@file)
       @whiny = options.fetch(:whiny, true)
-      
+
+      @auto_orient = options.fetch(:auto_orient, true)
+      @convert_options = options[:convert_options]
+
       @current_format = current_format(file).downcase
       @format = options[:format] || @current_format
 
@@ -67,14 +70,28 @@ module Paperclip
       end
       
       def process_convert_options(image)
-        if image && @options[:convert_options].present?
-          commands = JSON.parse(@options[:convert_options], symbolize_names: true)
+        if image
+          commands = parsed_convert_commands(@convert_options)
           commands.each do |cmd|
             image = ::Vips::Operation.call(cmd[:cmd], [image, *cmd[:args]], cmd[:optional] || {})
           end
         end
 
         return image
+      end
+
+      def parsed_convert_commands(convert_options)
+        begin
+          commands = JSON.parse(convert_options, symbolize_names: true)
+        rescue
+          commands = []
+        end
+
+        if @auto_orient && commands.exclude?({ cmd: "autorot" })
+          commands.unshift({ cmd: "autorot" })
+        end
+
+        return commands
       end
 
       def save_thumbnail(thumbnail, path)

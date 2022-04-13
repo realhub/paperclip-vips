@@ -1,3 +1,7 @@
+## [1.2.2] - 2022-04-13
+
+- Add support for `auto_orient` option
+
 ## [1.2.1] - 2022-01-31
 
 - Update dev dependencies
