@@ -29,8 +29,10 @@ GEM
     mimemagic (0.3.10)
       nokogiri (~> 1)
       rake
+    mini_portile2 (2.8.1)
     minitest (5.15.0)
-    nokogiri (1.12.5)
+    nokogiri (1.14.3)
+      mini_portile2 (~> 2.8.0)
       racc (~> 1.4)
     paperclip (6.1.0)
       activemodel (>= 4.2.0)
@@ -38,7 +40,7 @@ GEM
       mime-types
       mimemagic (~> 0.3.0)
       terrapin (~> 0.6.0)
-    racc (1.6.0)
+    racc (1.6.2)
     rake (13.0.6)
     rspec (3.10.0)
       rspec-core (~> 3.10.0)
